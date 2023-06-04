@@ -1,5 +1,4 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
 
 const gallery = document.querySelector('.gallery');
 
@@ -19,4 +18,23 @@ galleryItems.forEach(img => {
   );
 });
 
-console.log(galleryItems);
+let lightboxImage;
+
+const showImage = event => {
+  if (event.target.nodeName !== "IMG") {
+    return;
+  } else {
+    event.preventDefault();
+    lightboxImage = basicLightbox.create(`<img src="${event.target.dataset.source}">`);
+    lightboxImage.show();
+  }
+};
+
+const closeImage = event => {
+  if (event.key === "Escape") {
+    lightboxImage.close();
+  }
+};
+
+gallery.addEventListener("click", showImage);
+document.addEventListener("keydown", closeImage);
