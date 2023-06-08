@@ -18,23 +18,15 @@ galleryItems.forEach(img => {
   );
 });
 
-let lightboxImage;
+gallery.addEventListener('click', (event) => {
+  event.preventDefault();
+  const showImage = basicLightbox.create(`<img src="${event.target.dataset.source}">`)
+  showImage.show();
+  gallery.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      showImage.close()
+    }
+  })
+} )
 
-const showImage = event => {
-  if (event.target.nodeName !== "IMG") {
-    return;
-  } else {
-    event.preventDefault();
-    lightboxImage = basicLightbox.create(`<img src="${event.target.dataset.source}">`);
-    lightboxImage.show();
-  }
-};
-
-const closeImage = event => {
-  if (event.key === "Escape") {
-    lightboxImage.close();
-  }
-};
-
-gallery.addEventListener("click", showImage);
-document.addEventListener("keydown", closeImage);
+console.log(galleryItems);
